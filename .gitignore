@@ -1,0 +1,4 @@
+.idea
+/auth-multitenancy-example.iml
+target/
+**/*.iml
