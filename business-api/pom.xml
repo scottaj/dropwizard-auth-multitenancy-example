@@ -10,6 +10,13 @@
   <modelVersion>4.0.0</modelVersion>
 
   <artifactId>business-api</artifactId>
+  <dependencies>
+    <dependency>
+      <groupId>al.thisis</groupId>
+      <artifactId>auth-multitenancy-example</artifactId>
+      <version>1.0</version>
+    </dependency>
+  </dependencies>
 
 
 </project>

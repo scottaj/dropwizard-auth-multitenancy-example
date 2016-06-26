@@ -27,4 +27,18 @@
       </column>
     </createTable>
   </changeSet>
+
+  <changeSet id="3" author="scottaj">
+    <createTable tableName="Widget">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+      <column name="name" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="scope" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+    </createTable>
+  </changeSet>
 </databaseChangeLog>

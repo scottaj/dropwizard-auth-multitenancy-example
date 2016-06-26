@@ -1,10 +1,10 @@
 server:
   applicationConnectors:
     - type: http
-      port: 8898
+      port: 8888
   adminConnectors:
     - type: http
-      port: 8899
+      port: 8889
 
 database:
   driverClass: org.h2.Driver

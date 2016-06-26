@@ -1,15 +1,12 @@
 package resources;
 
 import api.Token;
-import api.User;
 import dao.TokenDAO;
 import dao.UserDAO;
 import dao.entities.TokenModel;
-import dao.entities.UserModel;
 import io.dropwizard.hibernate.UnitOfWork;
 
 import javax.ws.rs.GET;
-import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -39,13 +36,5 @@ public class AuthResource {
     }
 
     throw new WebApplicationException(Status.UNAUTHORIZED);
-  }
-
-  @POST
-  @Path("/user")
-  @UnitOfWork
-  public User createUser(User userToCreate) {
-    UserModel createdUser = userDAO.createUser(userToCreate);
-    return new User(createdUser.getId(), createdUser.getName());
   }
 }
