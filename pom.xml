@@ -4,9 +4,11 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <packaging>pom</packaging>
+
   <modules>
     <module>authentication-api</module>
     <module>business-api</module>
+    <module>common</module>
   </modules>
 
   <properties>
@@ -16,6 +18,14 @@
   <groupId>al.thisis</groupId>
   <artifactId>auth-multitenancy-example</artifactId>
   <version>1.0</version>
+
+  <repositories>
+    <repository>
+      <id>project.local</id>
+      <name>project</name>
+      <url>file:${project.basedir}/</url>
+    </repository>
+  </repositories>
 
   <dependencies>
     <dependency>

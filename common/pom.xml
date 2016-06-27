@@ -9,14 +9,7 @@
   </parent>
   <modelVersion>4.0.0</modelVersion>
 
-  <artifactId>business-api</artifactId>
-  <dependencies>
-    <dependency>
-      <groupId>al.thisis</groupId>
-      <artifactId>common</artifactId>
-      <version>1.0</version>
-    </dependency>
-  </dependencies>
+  <artifactId>common</artifactId>
 
   <build>
     <plugins>
@@ -47,7 +40,7 @@
               <transformers>
                 <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
                 <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                  <mainClass>BusinessAPI</mainClass>
+                  <mainClass>MigrationApp</mainClass>
                 </transformer>
               </transformers>
             </configuration>
