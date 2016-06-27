@@ -41,4 +41,10 @@
       </column>
     </createTable>
   </changeSet>
+
+  <changeSet id="4" author="scottaj">
+    <insert tableName="User">
+      <column name="name" value="Boss"/>
+    </insert>
+  </changeSet>
 </databaseChangeLog>
