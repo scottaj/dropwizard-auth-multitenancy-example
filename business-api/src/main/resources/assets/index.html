@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Dropwizard Example</title>
+  <script src="jquery.js"></script>
+  <script src="js.cookie.js"></script>
+</head>
+<body>
+<h3 style="color: red;" class="message"></h3>
+<div class="login-as">
+  <input type="text" class="user-id" placeholder="User Id">
+  <button onclick="login();" class="login-button">Log In With User ID</button>
+  <button onclick="logout();" class="login-button">Log Out</button>
+  <div style="color:green;" class="login-status"></div>
+</div>
+<div class="create-user">
+  <input type="text" class="new-user-name" placeholder="New User Name">
+  <button onclick="createUser()" class="new-user-button">Create User</button>
+</div>
+
+<hr>
+
+<button onclick="showPublic()" class="view-public">View Public Widgets</button>
+<button onclick="showPrivate()" class="view-private">View Private Widgets</button>
+<button onclick="showSecret()" class="view-top-secret">View Top Secret Widgets</button>
+
+<div class="widget-list"></div>
+
+<hr>
+
+<div class="create-widget">
+  <h3>Create New Widget</h3>
+  <input type="text" class="widget-name" placeholder="Name">
+  <select class="widget-scope">
+    <option value="" disabled selected>Select Visibility</option>
+    <option value="PUBLIC">Public</option>
+    <option value="PRIVATE">Private</option>
+    <option value="TOP_SECRET">Top Secret</option>
+  </select>
+  <button onclick="createWidget()" class="create-widget-button">Create New Widget</button>
+</div>
+
+<script src="example.js"></script>
+</body>
+</html>

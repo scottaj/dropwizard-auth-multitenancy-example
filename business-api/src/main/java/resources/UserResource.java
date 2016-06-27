@@ -5,6 +5,7 @@ import dao.UserDAO;
 import dao.entities.UserModel;
 import io.dropwizard.hibernate.UnitOfWork;
 
+import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -21,6 +22,7 @@ public class UserResource {
 
   @POST
   @UnitOfWork
+  @RolesAllowed({"MANAGER"})
   public User createUser(User userToCreate) {
     UserModel createdUser = userDAO.createUser(userToCreate);
     return new User(createdUser.getId(), createdUser.getName());

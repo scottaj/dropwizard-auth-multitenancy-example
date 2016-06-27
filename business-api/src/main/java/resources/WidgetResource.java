@@ -6,6 +6,8 @@ import dao.WidgetScope;
 import dao.entities.WidgetModel;
 import io.dropwizard.hibernate.UnitOfWork;
 
+import javax.annotation.security.PermitAll;
+import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -25,6 +27,7 @@ public class WidgetResource {
 
   @POST
   @UnitOfWork
+  @RolesAllowed({"MANAGER"})
   public Widget createWidget(Widget widget) {
     WidgetModel widgetModel = widgetDAO.createWidget(widget);
 
@@ -34,6 +37,7 @@ public class WidgetResource {
   @GET
   @Path("/public")
   @UnitOfWork
+  @PermitAll
   public List<Widget> getPublicWidgets() {
     return getWidgetsForScope(WidgetScope.PUBLIC);
   }
@@ -41,6 +45,7 @@ public class WidgetResource {
   @GET
   @Path("/private")
   @UnitOfWork
+  @RolesAllowed({"EMPLOYEE", "MANAGER"})
   public List<Widget> getPrivateWidgets() {
     return getWidgetsForScope(WidgetScope.PRIVATE);
   }
@@ -48,6 +53,7 @@ public class WidgetResource {
   @GET
   @Path("/top-secret")
   @UnitOfWork
+  @RolesAllowed({"MANAGER"})
   public List<Widget> getTopSecretWidgets() {
     return getWidgetsForScope(WidgetScope.TOP_SECRET);
   }

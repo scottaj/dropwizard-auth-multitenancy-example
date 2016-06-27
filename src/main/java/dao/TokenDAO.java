@@ -1,5 +1,6 @@
 package dao;
 
+import com.google.common.base.Optional;
 import dao.entities.TokenModel;
 import dao.entities.UserModel;
 import io.dropwizard.hibernate.AbstractDAO;
@@ -7,7 +8,6 @@ import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 
-import java.util.Optional;
 import java.util.UUID;
 
 public class TokenDAO extends AbstractDAO<TokenModel> {
@@ -20,28 +20,28 @@ public class TokenDAO extends AbstractDAO<TokenModel> {
 
   public TokenModel findOrCreateTokenForUser(Long userId) {
     Optional<UserModel> foundUser = userDAO.getUser(userId);
-    TokenModel token = null;
+    Optional<TokenModel> token = Optional.absent();
 
     if (foundUser.isPresent()) {
       UserModel user = foundUser.get();
       token = findTokenForUser(user);
 
-      if (token == null) {
-        token = new TokenModel();
-        token.setUser(user);
-        token.setId(UUID.randomUUID());
-        return persist(token);
+      if (!token.isPresent()) {
+        TokenModel model = new TokenModel();
+        model.setUser(user);
+        model.setId(UUID.randomUUID());
+        return persist(model);
       }
     }
 
-    return token;
+    return token.orNull();
   }
 
-  private TokenModel findTokenForUser(UserModel user) {
+  public Optional<TokenModel> findTokenForUser(UserModel user) {
     Criteria criteria = criteria()
       .createAlias("user", "u")
       .add(Restrictions.eq("u.id", user.getId()));
 
-    return uniqueResult(criteria);
+    return Optional.fromNullable(uniqueResult(criteria));
   }
 }
