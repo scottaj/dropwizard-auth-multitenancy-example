@@ -18,6 +18,7 @@ public class UserDAO extends AbstractDAO<UserModel> {
   public UserModel createUser(User userToCreate) {
     UserModel user = new UserModel();
     user.setName(userToCreate.getName());
+    user.setRole(userToCreate.getRole());
 
     return persist(user);
   }

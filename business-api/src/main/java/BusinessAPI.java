@@ -11,6 +11,7 @@ import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import middleware.security.CustomAuthFilter;
 import middleware.security.CustomAuthenticator;
+import org.glassfish.jersey.server.filter.RolesAllowedDynamicFeature;
 import org.hibernate.SessionFactory;
 import resources.UserResource;
 import resources.WidgetResource;
@@ -52,5 +53,6 @@ public class BusinessAPI extends Application<ExampleConfig> {
     CustomAuthFilter filter = new CustomAuthFilter(authenticator);
 
     environment.jersey().register(new AuthDynamicFeature(filter));
+    environment.jersey().register(RolesAllowedDynamicFeature.class);
   }
 }

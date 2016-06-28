@@ -4,12 +4,18 @@ import com.google.common.base.Optional;
 import io.dropwizard.auth.AuthFilter;
 import io.dropwizard.auth.AuthenticationException;
 
+import javax.annotation.Priority;
+import javax.ws.rs.Priorities;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.container.ContainerRequestContext;
+import javax.ws.rs.container.PreMatching;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.SecurityContext;
 import java.io.IOException;
 import java.util.UUID;
 
+@PreMatching
+@Priority(Priorities.AUTHENTICATION)
 public class CustomAuthFilter extends AuthFilter<CustomCredentials, CustomAuthUser> {
   private CustomAuthenticator authenticator;
 
@@ -29,7 +35,10 @@ public class CustomAuthFilter extends AuthFilter<CustomCredentials, CustomAuthUs
       throw new WebApplicationException("Unable to validate credentials", Response.Status.UNAUTHORIZED);
     }
 
-    if (!authenticatedUser.isPresent()) {
+    if (authenticatedUser.isPresent()) {
+      SecurityContext securityContext = new CustomSecurityContext(authenticatedUser.get(), requestContext.getSecurityContext());
+      requestContext.setSecurityContext(securityContext);
+    } else {
       throw new WebApplicationException("Credentials not valid", Response.Status.UNAUTHORIZED);
     }
   }

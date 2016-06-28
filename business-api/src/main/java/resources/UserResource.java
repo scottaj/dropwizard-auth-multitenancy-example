@@ -25,6 +25,6 @@ public class UserResource {
   @RolesAllowed({"MANAGER"})
   public User createUser(User userToCreate) {
     UserModel createdUser = userDAO.createUser(userToCreate);
-    return new User(createdUser.getId(), createdUser.getName());
+    return new User(createdUser.getId(), createdUser.getName(), createdUser.getRole());
   }
 }

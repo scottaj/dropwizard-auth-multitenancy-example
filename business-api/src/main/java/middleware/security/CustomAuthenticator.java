@@ -25,13 +25,14 @@ public class CustomAuthenticator implements Authenticator<CustomCredentials, Cus
     Optional<UserModel> user = userDAO.getUser(credentials.getUserId());
 
     if (user.isPresent()) {
-      Optional<TokenModel> token = tokenDAO.findTokenForUser(user.get());
+      UserModel userModel = user.get();
+      Optional<TokenModel> token = tokenDAO.findTokenForUser(userModel);
 
       if (token.isPresent()) {
         TokenModel tokenModel = token.get();
 
         if (tokenModel.getId().equals(credentials.getToken())) {
-          authenticatedUser = new CustomAuthUser(tokenModel.getUser().getId(), tokenModel.getUser().getName());
+          authenticatedUser = new CustomAuthUser(userModel.getName(), userModel.getRole());
         }
       }
     }

@@ -1,6 +1,10 @@
 package dao.entities;
 
+import dao.Role;
+
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -13,6 +17,8 @@ public class UserModel {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
   private String name;
+  @Enumerated(EnumType.STRING)
+  private Role role;
 
   public Long getId() {
     return id;
@@ -28,5 +34,13 @@ public class UserModel {
 
   public void setName(String name) {
     this.name = name;
+  }
+
+  public Role getRole() {
+    return role;
+  }
+
+  public void setRole(Role role) {
+    this.role = role;
   }
 }

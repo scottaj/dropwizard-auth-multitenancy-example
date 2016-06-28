@@ -28,7 +28,8 @@ function logout() {
 
 function createUser() {
   var userData = {
-    name: $('.new-user-name').val()
+    name: $('.new-user-name').val(),
+    role: $('.user-role').val()
   };
 
   $.post({
@@ -94,7 +95,7 @@ function setLoginStatus() {
   if (Cookies.get('auth_token') && Cookies.get('auth_user')) {
     $('.login-status').html("Logged in as user id: " + Cookies.get('auth_user'));
   } else {
-    $('.login-status').html("Not Logged In");
+    $('.login-status').html("Not Logged In (use user ID 1 if you haven't created another)");
   }
 }
 
@@ -111,6 +112,9 @@ function standardErrorHandler(xhr) {
   switch (xhr.status) {
     case 401:
       setMessage("Not logged in!");
+      break;
+    case 403:
+      setMessage("Missing required role");
       break;
     default:
       setMessage("Unknown Error");
