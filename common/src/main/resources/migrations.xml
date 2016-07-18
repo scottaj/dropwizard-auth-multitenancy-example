@@ -55,4 +55,50 @@
       </column>
     </addColumn>
   </changeSet>
+
+  <changeSet id="6" author="scottaj">
+    <createTable tableName="Tenant">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+      <column name="name" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+    </createTable>
+
+    <addColumn tableName="Widget">
+      <column name="tenantId" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+    </addColumn>
+
+    <addForeignKeyConstraint baseTableName="Widget"
+                             baseColumnNames="tenantId"
+                             constraintName="widget_tenant_fk"
+                             referencedTableName="Tenant"
+                             referencedColumnNames="id"/>
+  </changeSet>
+
+  <changeSet id="7" author="scottaj">
+    <addColumn tableName="User">
+      <column name="tenantId" type="bigint"/>
+    </addColumn>
+
+    <addForeignKeyConstraint baseTableName="User"
+                             baseColumnNames="tenantId"
+                             constraintName="user_tenant_fk"
+                             referencedTableName="Tenant"
+                             referencedColumnNames="id"/>
+
+    <insert tableName="Tenant">
+      <column name="id" value="1"/>
+      <column name="name" value="BigCorp"/>
+    </insert>
+
+    <update tableName="User">
+      <column name="tenantId" value="1"/>
+    </update>
+
+    <addNotNullConstraint tableName="User" columnName="tenantId" columnDataType="bigint"/>
+  </changeSet>
 </databaseChangeLog>

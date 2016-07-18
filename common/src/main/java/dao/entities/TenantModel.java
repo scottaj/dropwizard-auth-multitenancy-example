@@ -1,30 +1,19 @@
 package dao.entities;
 
-import dao.Role;
-
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "User")
-public class UserModel {
+@Table(name = "Tenant")
+public class TenantModel {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
-  private String name;
-  @Enumerated(EnumType.STRING)
-  private Role role;
 
-  @ManyToOne
-  @JoinColumn(name = "tenantId")
-  private TenantModel tenant;
+  private String name;
 
   public Long getId() {
     return id;
@@ -40,13 +29,5 @@ public class UserModel {
 
   public void setName(String name) {
     this.name = name;
-  }
-
-  public Role getRole() {
-    return role;
-  }
-
-  public void setRole(Role role) {
-    this.role = role;
   }
 }

@@ -8,6 +8,8 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -21,6 +23,10 @@ public class WidgetModel {
 
   @Enumerated(EnumType.STRING)
   private WidgetScope scope;
+
+  @ManyToOne
+  @JoinColumn(name = "tenantId")
+  private TenantModel tenant;
 
   public Integer getId() {
     return id;
@@ -44,5 +50,13 @@ public class WidgetModel {
 
   public void setScope(WidgetScope scope) {
     this.scope = scope;
+  }
+
+  public TenantModel getTenant() {
+    return tenant;
+  }
+
+  public void setTenant(TenantModel tenant) {
+    this.tenant = tenant;
   }
 }
