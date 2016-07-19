@@ -1,6 +1,7 @@
 package dao.entities;
 
 import dao.Role;
+import org.hibernate.annotations.Filter;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -14,6 +15,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "User")
+@Filter(name = "restrictToTenant")
 public class UserModel {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

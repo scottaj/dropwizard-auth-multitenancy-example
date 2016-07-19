@@ -1,6 +1,7 @@
 package dao.entities;
 
 import dao.WidgetScope;
+import org.hibernate.annotations.Filter;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -14,6 +15,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "Widget")
+@Filter(name = "restrictToTenant")
 public class WidgetModel {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

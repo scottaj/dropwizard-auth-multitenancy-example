@@ -7,6 +7,7 @@ import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import org.eclipse.jetty.servlets.CrossOriginFilter;
 import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
 import resources.AuthResource;
 
 import javax.servlet.DispatcherType;
@@ -19,6 +20,13 @@ public class AuthenticationAPI extends Application<ExampleConfig> {
   }
 
   private final ScanningHibernateBundle<ExampleConfig> hibernate = new ScanningHibernateBundle<ExampleConfig>("dao.entities") {
+    @Override
+    protected void configure(Configuration configuration) {
+      // Register package so global filters in package-info.java get seen.
+      configuration.addPackage("dao.entities");
+      super.configure(configuration);
+    }
+
     @Override
     public PooledDataSourceFactory getDataSourceFactory(ExampleConfig config) {
       return config.getDatabaseConfig();

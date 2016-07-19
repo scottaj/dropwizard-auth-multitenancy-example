@@ -15,6 +15,7 @@ import middleware.security.CustomAuthFilter;
 import middleware.security.CustomAuthenticator;
 import org.glassfish.jersey.server.filter.RolesAllowedDynamicFeature;
 import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
 import resources.UserResource;
 import resources.WidgetResource;
 
@@ -24,6 +25,13 @@ public class BusinessAPI extends Application<ExampleConfig> {
   }
 
   private final ScanningHibernateBundle<ExampleConfig> hibernate = new ScanningHibernateBundle<ExampleConfig>("dao.entities") {
+    @Override
+    protected void configure(Configuration configuration) {
+      // Register package so global filters in package-info.java get seen.
+      configuration.addPackage("dao.entities");
+      super.configure(configuration);
+    }
+
     @Override
     public PooledDataSourceFactory getDataSourceFactory(ExampleConfig config) {
       return config.getDatabaseConfig();
@@ -52,7 +60,7 @@ public class BusinessAPI extends Application<ExampleConfig> {
   }
 
   private void setupMultitenancy(Environment environment, TenantDAO tenantDAO) {
-    MultitenancyApplicationListener listener = new MultitenancyApplicationListener(tenantDAO);
+    MultitenancyApplicationListener listener = new MultitenancyApplicationListener(tenantDAO, hibernate.getSessionFactory());
 
     environment.jersey().register(listener);
   }

@@ -95,7 +95,7 @@ function setLoginStatus() {
   if (Cookies.get('auth_token') && Cookies.get('auth_user')) {
     $('.login-status').html("Logged in as user id: " + Cookies.get('auth_user'));
   } else {
-    $('.login-status').html("Not Logged In (use user ID 1 if you haven't created another)");
+    $('.login-status').html("Not Logged In (use user ID 1, 10, or 20 if you haven't created another)");
   }
 }
 

@@ -101,4 +101,28 @@
 
     <addNotNullConstraint tableName="User" columnName="tenantId" columnDataType="bigint"/>
   </changeSet>
+
+  <changeSet id="8" author="scottaj">
+    <insert tableName="Tenant">
+      <column name="id" value="2"/>
+      <column name="name" value="MediumCorp"/>
+    </insert>
+
+    <insert tableName="User">
+      <column name="id" value="10"/>
+      <column name="name" value="Boss"/>
+      <column name="tenantId" value="2"/>
+    </insert>
+
+    <insert tableName="Tenant">
+      <column name="id" value="3"/>
+      <column name="name" value="SmallCorp"/>
+    </insert>
+
+    <insert tableName="User">
+      <column name="id" value="20"/>
+      <column name="name" value="Boss"/>
+      <column name="tenantId" value="3"/>
+    </insert>
+  </changeSet>
 </databaseChangeLog>
