@@ -3,6 +3,7 @@ package dao;
 import api.Widget;
 import dao.entities.WidgetModel;
 import io.dropwizard.hibernate.AbstractDAO;
+import middleware.multitenancy.TenantRequestData;
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
@@ -25,6 +26,7 @@ public class WidgetDAO extends AbstractDAO<WidgetModel> {
     WidgetModel widgetModel = new WidgetModel();
     widgetModel.setName(widget.getName());
     widgetModel.setScope(widget.getScope());
+    widgetModel.setTenant(TenantRequestData.tenant.get());
 
     return persist(widgetModel);
   }

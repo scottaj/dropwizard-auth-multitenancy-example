@@ -11,7 +11,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-@Path("/users")
+@Path("/tenants/{tenantId}/users")
 @Produces(MediaType.APPLICATION_JSON)
 public class UserResource {
   private UserDAO userDAO;

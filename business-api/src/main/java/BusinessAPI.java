@@ -1,3 +1,4 @@
+import dao.TenantDAO;
 import dao.TokenDAO;
 import dao.UserDAO;
 import dao.WidgetDAO;
@@ -9,6 +10,7 @@ import io.dropwizard.hibernate.ScanningHibernateBundle;
 import io.dropwizard.hibernate.UnitOfWorkAwareProxyFactory;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
+import middleware.multitenancy.MultitenancyApplicationListener;
 import middleware.security.CustomAuthFilter;
 import middleware.security.CustomAuthenticator;
 import org.glassfish.jersey.server.filter.RolesAllowedDynamicFeature;
@@ -40,11 +42,19 @@ public class BusinessAPI extends Application<ExampleConfig> {
     WidgetDAO widgetDAO = new WidgetDAO(sessionFactory);
     UserDAO userDAO = new UserDAO(sessionFactory);
     TokenDAO tokenDAO = new TokenDAO(sessionFactory, userDAO);
+    TenantDAO tenantDAO = new TenantDAO(sessionFactory);
 
+    setupMultitenancy(environment, tenantDAO);
     setupAuth(environment, tokenDAO, userDAO);
 
     environment.jersey().register(new WidgetResource(widgetDAO));
     environment.jersey().register(new UserResource(userDAO));
+  }
+
+  private void setupMultitenancy(Environment environment, TenantDAO tenantDAO) {
+    MultitenancyApplicationListener listener = new MultitenancyApplicationListener(tenantDAO);
+
+    environment.jersey().register(listener);
   }
 
   private void setupAuth(Environment environment, TokenDAO tokenDAO, UserDAO userDAO) {

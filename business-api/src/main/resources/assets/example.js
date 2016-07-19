@@ -33,7 +33,7 @@ function createUser() {
   };
 
   $.post({
-    url: '/api/users',
+    url: '/api/tenants/'+ tenantId() +'/users',
     contentType: 'application/json',
     data: JSON.stringify(userData)
   })
@@ -44,7 +44,7 @@ function createUser() {
 }
 
 function showPublic() {
-  $.getJSON('/api/widgets/public')
+  $.getJSON('/api/tenants/'+ tenantId() +'/widgets/public')
     .then(function (widgets) {
       showWidgets(widgets);
     })
@@ -52,7 +52,7 @@ function showPublic() {
 }
 
 function showPrivate() {
-  $.getJSON('/api/widgets/private')
+  $.getJSON('/api/tenants/'+ tenantId() +'/widgets/private')
     .then(function (widgets) {
       showWidgets(widgets);
     })
@@ -60,7 +60,7 @@ function showPrivate() {
 }
 
 function showSecret() {
-  $.getJSON('/api/widgets/top-secret')
+  $.getJSON('/api/tenants/'+ tenantId() +'/widgets/top-secret')
     .then(function (widgets) {
       showWidgets(widgets);
     })
@@ -74,7 +74,7 @@ function createWidget() {
   };
 
   $.post({
-    url: '/api/widgets',
+    url: '/api/tenants/'+ tenantId() +'/widgets',
     contentType: 'application/json',
     data: JSON.stringify(widgetData)
   })
@@ -119,6 +119,10 @@ function standardErrorHandler(xhr) {
     default:
       setMessage("Unknown Error");
   }
+}
+
+function tenantId() {
+  return parseInt($('.tenant-id').val());
 }
 
 function init() {

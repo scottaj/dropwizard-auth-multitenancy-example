@@ -49,4 +49,12 @@ public class UserModel {
   public void setRole(Role role) {
     this.role = role;
   }
+
+  public TenantModel getTenant() {
+    return tenant;
+  }
+
+  public void setTenant(TenantModel tenant) {
+    this.tenant = tenant;
+  }
 }
