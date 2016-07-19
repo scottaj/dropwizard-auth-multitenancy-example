@@ -5,10 +5,12 @@ import java.security.Principal;
 
 public class CustomSecurityContext implements SecurityContext {
   private final CustomAuthUser principal;
+  private final Long tenantId;
   private final SecurityContext securityContext;
 
-  public CustomSecurityContext(CustomAuthUser principal, SecurityContext securityContext) {
+  public CustomSecurityContext(CustomAuthUser principal, Long tenantId, SecurityContext securityContext) {
     this.principal = principal;
+    this.tenantId = tenantId;
     this.securityContext = securityContext;
   }
 
@@ -19,7 +21,7 @@ public class CustomSecurityContext implements SecurityContext {
 
   @Override
   public boolean isUserInRole(String role) {
-    return role.equals(principal.getRole().name());
+    return principal.getTenantId().equals(tenantId) && role.equals(principal.getRole().name());
   }
 
   @Override

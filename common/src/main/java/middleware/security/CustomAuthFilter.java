@@ -20,7 +20,6 @@ public class CustomAuthFilter extends AuthFilter<CustomCredentials, CustomAuthUs
   private CustomAuthenticator authenticator;
 
   public CustomAuthFilter(CustomAuthenticator authenticator) {
-
     this.authenticator = authenticator;
   }
 
@@ -36,10 +35,19 @@ public class CustomAuthFilter extends AuthFilter<CustomCredentials, CustomAuthUs
     }
 
     if (authenticatedUser.isPresent()) {
-      SecurityContext securityContext = new CustomSecurityContext(authenticatedUser.get(), requestContext.getSecurityContext());
+      Long tenantId = parseTenantId(requestContext);
+      SecurityContext securityContext = new CustomSecurityContext(authenticatedUser.get(), tenantId, requestContext.getSecurityContext());
       requestContext.setSecurityContext(securityContext);
     } else {
       throw new WebApplicationException("Credentials not valid", Response.Status.UNAUTHORIZED);
+    }
+  }
+
+  private Long parseTenantId(ContainerRequestContext requestContext) {
+    try {
+      return Long.valueOf(requestContext.getUriInfo().getPathParameters().getFirst("tenantId"));
+    } catch (Exception e) {
+      throw new WebApplicationException("No tenant ID in path", Response.Status.FORBIDDEN);
     }
   }
 

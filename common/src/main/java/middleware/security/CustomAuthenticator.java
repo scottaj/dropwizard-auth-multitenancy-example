@@ -32,7 +32,7 @@ public class CustomAuthenticator implements Authenticator<CustomCredentials, Cus
         TokenModel tokenModel = token.get();
 
         if (tokenModel.getId().equals(credentials.getToken())) {
-          authenticatedUser = new CustomAuthUser(userModel.getName(), userModel.getRole());
+          authenticatedUser = new CustomAuthUser(userModel.getName(), userModel.getTenant().getId(), userModel.getRole());
         }
       }
     }
