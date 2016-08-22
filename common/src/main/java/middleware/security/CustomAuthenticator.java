@@ -1,6 +1,5 @@
 package middleware.security;
 
-import com.google.common.base.Optional;
 import dao.TokenDAO;
 import dao.UserDAO;
 import dao.entities.TokenModel;
@@ -8,6 +7,8 @@ import dao.entities.UserModel;
 import io.dropwizard.auth.AuthenticationException;
 import io.dropwizard.auth.Authenticator;
 import io.dropwizard.hibernate.UnitOfWork;
+
+import java.util.Optional;
 
 public class CustomAuthenticator implements Authenticator<CustomCredentials, CustomAuthUser> {
   private TokenDAO tokenDAO;
@@ -37,6 +38,6 @@ public class CustomAuthenticator implements Authenticator<CustomCredentials, Cus
       }
     }
 
-    return Optional.fromNullable(authenticatedUser);
+    return Optional.ofNullable(authenticatedUser);
   }
 }

@@ -1,6 +1,5 @@
 package dao;
 
-import com.google.common.base.Optional;
 import dao.entities.TokenModel;
 import dao.entities.UserModel;
 import io.dropwizard.hibernate.AbstractDAO;
@@ -8,6 +7,7 @@ import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 
+import java.util.Optional;
 import java.util.UUID;
 
 public class TokenDAO extends AbstractDAO<TokenModel> {
@@ -20,7 +20,7 @@ public class TokenDAO extends AbstractDAO<TokenModel> {
 
   public TokenModel findOrCreateTokenForUser(Long userId) {
     Optional<UserModel> foundUser = userDAO.getUser(userId);
-    Optional<TokenModel> token = Optional.absent();
+    Optional<TokenModel> token = Optional.empty();
 
     if (foundUser.isPresent()) {
       UserModel user = foundUser.get();
@@ -34,7 +34,7 @@ public class TokenDAO extends AbstractDAO<TokenModel> {
       }
     }
 
-    return token.orNull();
+    return token.orElse(null);
   }
 
   public Optional<TokenModel> findTokenForUser(UserModel user) {
@@ -42,6 +42,6 @@ public class TokenDAO extends AbstractDAO<TokenModel> {
       .createAlias("user", "u")
       .add(Restrictions.eq("u.id", user.getId()));
 
-    return Optional.fromNullable(uniqueResult(criteria));
+    return Optional.ofNullable(uniqueResult(criteria));
   }
 }

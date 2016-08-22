@@ -1,11 +1,12 @@
 package dao;
 
 import api.User;
-import com.google.common.base.Optional;
 import dao.entities.UserModel;
 import io.dropwizard.hibernate.AbstractDAO;
 import middleware.multitenancy.TenantRequestData;
 import org.hibernate.SessionFactory;
+
+import java.util.Optional;
 
 public class UserDAO extends AbstractDAO<UserModel> {
   public UserDAO(SessionFactory sessionFactory) {
@@ -13,7 +14,7 @@ public class UserDAO extends AbstractDAO<UserModel> {
   }
 
   public Optional<UserModel> getUser(Long userId) {
-    return Optional.fromNullable(get(userId));
+    return Optional.ofNullable(get(userId));
   }
 
   public UserModel createUser(User userToCreate) {

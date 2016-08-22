@@ -1,6 +1,5 @@
 package middleware.security;
 
-import com.google.common.base.Optional;
 import io.dropwizard.auth.AuthFilter;
 import io.dropwizard.auth.AuthenticationException;
 
@@ -12,6 +11,7 @@ import javax.ws.rs.container.PreMatching;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 import java.io.IOException;
+import java.util.Optional;
 import java.util.UUID;
 
 @PreMatching
